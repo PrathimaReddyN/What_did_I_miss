@@ -1,0 +1,206 @@
+Build a complete, responsive, AI-powered web application called **“What Did I Miss?”**
+
+**Tagline:** “Catch up in seconds. Never miss what matters.”
+
+### 1. PURPOSE
+
+The app helps students, professionals, and busy people understand long conversations without reading every message. Users paste a long chat, class group conversation, meeting transcript, or announcement, and the AI extracts the main summary, important messages, deadlines, decisions, and tasks.
+
+Build a functional MVP, not just a static UI or landing page.
+
+### 2. DESIGN AND UI
+
+Use a modern, premium SaaS design with:
+
+* Dark navy blue and soft lavender accents, with white or light grey content cards.
+* Clean typography, generous spacing, rounded cards, subtle shadows, and simple icons.
+* A friendly, minimal, professional appearance.
+* Responsive layouts for laptops, tablets, and mobile phones.
+* Smooth but subtle animations and clear loading indicators.
+* Accessible text contrast and readable font sizes.
+
+Create a simple navigation bar with the app logo, Home, How It Works, and a Get Started button.
+
+### 3. HOME PAGE
+
+Display:
+
+* Logo: What Did I Miss?
+* Headline: “Hundreds of messages. Zero confusion.”
+* Subtitle: “Paste your conversation. Get the summary, deadlines, and important updates in seconds.”
+* A prominent “Summarize My Chat” button.
+* Three feature cards: Smart Summaries, Deadline Detection, and Important Updates.
+* A short How It Works section explaining Paste → Analyze → Catch Up.
+* A footer with About, Privacy, and Contact links.
+
+### 4. MAIN SUMMARIZER DASHBOARD
+
+Create a dashboard with a large text area where users can paste their conversation.
+
+Include:
+
+* Placeholder: “Paste your group chat, class announcements, meeting notes, or any long conversation here…”
+* A character counter.
+* A Clear Text button.
+* A sample conversation button for testing.
+* An optional context field: “What is this conversation about?”
+* A category selector: College Group, Work, Meeting, Event, or General.
+* A prominent “Analyze Conversation” button.
+
+Validate empty input and display a helpful error. Add a sensible input limit and a clear message when it is exceeded.
+
+### 5. AI ANALYSIS
+
+Implement real AI-powered analysis through a secure backend.
+
+When the user clicks Analyze Conversation, process the pasted text and return structured results in these sections:
+
+**A. Quick Summary**
+Provide a concise overview in simple language, using approximately 3–7 bullet points depending on the conversation length.
+
+**B. Important Messages**
+Highlight important announcements, decisions, changes, requests, cancellations, and urgent updates.
+
+**C. Deadlines and Dates**
+Extract deadlines, exams, assignment submissions, meetings, events, and other time-sensitive items. Show the date, time if available, description, and any relevant context.
+
+**D. Action Items**
+Create a checklist of tasks mentioned in the conversation. Let users mark tasks as completed.
+
+**E. Decisions Made**
+Summarize conclusions and decisions agreed upon by participants.
+
+**F. Things You Must Not Miss**
+Show a concise priority list of the most important information.
+
+For every extracted item, preserve the original meaning. Include the relevant speaker and a short source excerpt when available.
+
+Never invent deadlines, names, times, or decisions. If a date is ambiguous, show the original wording and mark it as needing confirmation. If a conversation contains no deadlines, explicitly say “No clear deadlines found.” Distinguish proposed dates from confirmed deadlines.
+
+### 6. RESULTS PAGE
+
+Display results using visually distinct cards with clear headings and icons.
+
+Include:
+
+* A short summary at the top.
+* A priority label for urgent items, when justified by the source text.
+* Deadline cards sorted by date when dates can be interpreted reliably.
+* A task checklist with interactive completion states.
+* Expandable details for longer important messages.
+* A “Copy Summary” button.
+* A “Copy All Results” button.
+* A “Analyze Another Conversation” button.
+
+Ensure the copy buttons actually copy the displayed results.
+
+### 7. AI AND BACKEND REQUIREMENTS
+
+Use a suitable AI model through a server-side API integration. Never expose API keys in frontend code.
+
+Store API credentials in secure environment variables or Bolt's secrets management.
+
+Define a structured response schema for the AI output and validate the returned data before rendering it.
+
+Show loading progress while analyzing, helpful error messages when analysis fails, and a retry option.
+
+If an AI provider or API key has not been configured, explain the missing configuration instead of pretending that real AI analysis succeeded. Provide a sample/demo mode so users can test the interface without an API key.
+
+### 8. PRIVACY
+
+Users may paste private conversations, so:
+
+* Do not save pasted conversations by default.
+* Process text only when the user requests analysis.
+* Do not send pasted content to analytics services.
+* Do not log conversation contents in server logs.
+* Clearly explain when text is sent to the configured AI provider.
+* Provide a Clear Conversation button that removes the pasted text and displayed results from the interface.
+* Do not claim that content is never stored unless the actual backend and AI provider behavior supports that claim.
+
+### 9. MVP SCOPE
+
+Prioritize the following working features:
+
+1. Paste a long conversation.
+2. Generate a genuine AI summary.
+3. Extract important messages and deadlines.
+4. Generate a task checklist.
+5. Copy results.
+6. Handle errors and ambiguous dates.
+7. Work on mobile and desktop.
+
+Do not add payment systems, subscriptions, social feeds, complicated admin dashboards, or unnecessary features in the first version.
+
+Use React, TypeScript, Tailwind CSS, and a suitable server-side integration. Use Bolt's supported backend and database options where necessary. Avoid requiring a database for the initial no-account MVP.
+
+### 10. FINAL QUALITY CHECK
+
+Build the complete app and make all buttons functional. Test the app using sample conversations with multiple deadlines, missing dates, urgent announcements, and no deadlines.
+
+Verify that the AI analysis is real when configured, that results are clearly organized, and that the demo mode is clearly labelled.
+
+Start by building the complete working MVP, not just a visual prototype.
+My existing app “What Did I Miss?” has a chat input area and analysis results UI, but it is not connected to a real AI model.
+
+I want you to MODIFY my existing project, not rebuild it from scratch.
+
+### Connect real AI analysis
+
+1. Inspect my current codebase and identify the existing chat input component, Analyze Conversation button, results components, and backend setup.
+
+2. Connect a real AI model using the Gemini API or another supported AI provider. Use a secure server-side API endpoint or server function compatible with my existing project.
+
+3. Create a secure backend function named `analyze-chat` that accepts the user's pasted conversation and optional context.
+
+4. Store the API key in a server-side environment secret named `GEMINI_API_KEY`. Never expose the key in frontend code or commit it to GitHub.
+
+5. When the user clicks Analyze Conversation:
+
+   * Send the actual text entered in the chat box to the backend.
+   * Call the configured AI model.
+   * Return genuine analysis of the supplied text.
+   * Display the response in my existing UI.
+   * Do not use hardcoded sample results or simulated AI responses in real analysis mode.
+
+### Required AI response
+
+Return structured JSON with these fields:
+
+* `summary`: short summary of the conversation.
+* `urgent_messages`: urgent messages with explanations and source excerpts.
+* `discussions_and_decisions`: discussion topics, final decisions, and unresolved issues.
+* `action_items`: tasks, assigned people if identifiable, priorities, and due dates.
+* `deadlines`: project deadlines, submission dates, event dates, and uncertainty about dates.
+* `questions_for_user`: questions directed at the user, their original wording, and whether they appear answered.
+* `announcements_and_changes`: cancellations, rescheduling, and important updates.
+* `key_takeaways`: the most important information the user must not miss.
+
+Instruct the AI to use only information supported by the conversation. Never invent deadlines, participants, decisions, or answers. Flag ambiguous dates and unanswered questions.
+
+### Frontend integration
+
+Connect the Analyze Conversation button to the real backend endpoint.
+
+Add:
+
+* A loading indicator.
+* Error handling with a retry button.
+* A clear message when AI configuration is missing.
+* Input validation.
+* Proper JSON response validation.
+* A way to retry failed analysis.
+* An option to analyze another conversation.
+
+Keep my existing UI, dark mode, checklist, and navigation working.
+
+### WhatsApp text support
+
+Allow users to paste long chat text and upload a WhatsApp-exported `.txt` conversation file. Read the file in the browser and let the user preview its contents before analysis.
+
+For long conversations, handle model token limits safely. Do not silently discard messages that may contain deadlines or important decisions.
+
+### Final requirement
+
+Implement the actual backend and frontend integration in my current project. Tell me exactly which environment secret I must configure and how to test whether the AI is genuinely analyzing my own text. Do not just explain what I should do; make the code changes.
+
